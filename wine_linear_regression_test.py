@@ -24,6 +24,13 @@ from sklearn.linear_model import ElasticNet
 
 import logging
 
+csv_url =\
+    'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv'
+try:
+    data = pd.read_csv(csv_url, sep=';')
+except Exception as e:
+    logger.exception(
+    "Unable to download training & test CSV, check your internet connection. Error: %s", e)
 
 # COMMAND ----------
 
@@ -44,13 +51,7 @@ def train(alpha=0.3, l1_ratio=0.5):
     np.random.seed(40)
 
     # Read the wine-quality csv file from the URL
-    csv_url =\
-        'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv'
-    try:
-        data = pd.read_csv(csv_url, sep=';')
-    except Exception as e:
-        logger.exception(
-            "Unable to download training & test CSV, check your internet connection. Error: %s", e)
+    
 
     # Split the data into training and test sets. (0.75, 0.25) split.
     train, test = train_test_split(data)
